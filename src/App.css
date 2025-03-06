@@ -1,0 +1,209 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('https://portal.astar.network/img/assets_bg_dark_A.b4950db5.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+}
+
+.connect-button{
+  margin: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bridge-card {
+  /* background: rgba(20, 21, 42, 0.95); */
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 480px;
+  color: white;
+}
+
+.transfer-section {
+  background: transparent;
+  border-radius: 12px;
+  border: 1px solid #8e8e9d;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.section-header {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.section-header1 {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.network-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+    font-weight: 700;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+
+.network-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.network-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.network-name {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.balance {
+  color: #8e8e9d;
+  font-size: 14px;
+}
+
+.switch-button {
+  display: flex;
+  justify-content: center;
+  margin: -8px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.switch-networks {
+  background: #2d2d3d;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #8e8e9d;
+}
+
+.token-amount {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  text-align: right;
+  width: 100%;
+  outline: none;
+}
+
+.info-box {
+  background: #f2c94c33;
+  border: 1px solid #f0b90b;
+  border-radius: 6px;
+  color: #d8a400;
+  display: flex;
+  flex-direction: column;
+  padding: 6px 8px;
+  row-gap: 6px;
+}
+
+.info-box ul {
+  list-style-type: disc;
+  color: #ffd700;
+  margin: 0;
+  padding-left: 20px;
+  width: 100%;
+}
+
+.info-box li {
+  margin-bottom: 8px;
+  padding-left: 4px;
+  text-align: left;
+}
+
+.info-box li:last-child {
+  margin-bottom: 0;
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.action-button {
+  padding: 12px;
+  border-radius: 500px;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  margin-top: 10px;
+  border: 1px solid #5f656f;
+    color: #5f656f;
+}
+
+/* .action-button:hover {
+  background: rgba(40, 41, 62, 0.95);
+} */
