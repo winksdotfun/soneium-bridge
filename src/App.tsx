@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import abi from './abi.json'
@@ -6,7 +6,46 @@ import { ethers } from 'ethers'
 
 function App() {
   const [amount, setAmount] = useState('0')
+  const [balance, setBalance] = useState('0')
+  const [soneumBalance, setSoneumBalance] = useState('0')
   const contractAddress = '0x4036a6Ff8C1a29677108Aef299B560f6E4fA5e71'
+
+  useEffect(() => {
+    const checkBalance = async () => {
+      try {
+        if (window.ethereum) {
+          const provider = new ethers.providers.Web3Provider(window.ethereum)
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+          const userAccount = accounts[0]
+          
+          const balance = await provider.getBalance(userAccount)
+          console.log('User balance:', ethers.utils.formatEther(balance), 'ASTR')
+          setBalance(ethers.utils.formatEther(balance))
+        }
+      } catch (error) {
+        console.error('Error checking balance:', error)
+      }
+    }
+    const checkSoneumBalance = async () => {
+      try {
+        if (window.ethereum) {
+          // Connect to Soneum network
+          const soneumProvider = new ethers.providers.JsonRpcProvider('https://rpc.soneium.org')
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+          const userAccount = accounts[0]
+          
+          const soneumBalance = await soneumProvider.getBalance(userAccount)
+          console.log('User Soneum balance:', ethers.utils.formatEther(soneumBalance), 'SON')
+          setSoneumBalance(ethers.utils.formatEther(soneumBalance))
+        }
+      } catch (error) {
+        console.error('Error checking Soneum balance:', error)
+      }
+    }
+
+    checkBalance()
+    checkSoneumBalance()
+  }, []) // Empty dependency array means this runs once on component mount
 
   const BridgeHandler = async () => {
     console.log('BridgeHandler called with amount:', amount)
@@ -41,9 +80,9 @@ function App() {
       // CCIP message parameters
       const destinationChainSelector = "12505351618335765396" // Soneium chain selector
       
+      console.log(userAccount)
       // Properly encode the receiver address as bytes
-      const receiverAddress = "0x2b258418ee8ba6822472f722bc558ce62d42280d"
-      const encodedReceiver = ethers.utils.defaultAbiCoder.encode(['address'], [receiverAddress])
+      const encodedReceiver = ethers.utils.defaultAbiCoder.encode(['address'], [userAccount])
       
       // Format message according to the EtherSenderReceiver contract requirements
       const message = {
@@ -64,6 +103,8 @@ function App() {
 
       // Get the fee estimate
       const fee = await contract.getFee(destinationChainSelector, message)
+
+      
       console.log('Estimated fee:', ethers.utils.formatEther(fee), 'ASTR')
 
       // Total value to send = amount + fee
@@ -118,7 +159,7 @@ function App() {
           <div className="section-header">
             <div>From</div>
 
-          <div className="balance">Balance: 15.016 ASTR</div>
+          <div className="balance">Balance: {Number(balance).toFixed(2)} ASTR</div>
 
           </div>
           <div className="network-row">
@@ -143,7 +184,7 @@ function App() {
         <div className="transfer-section">
           <div className="section-header">
           <div>To</div>
-          <div className="balance">Balance: 0 ASTR</div>
+          <div className="balance">Balance: {Number(soneumBalance).toFixed(4)} ASTR</div>
 
           </div>
           <div className="network-row">
@@ -159,7 +200,7 @@ function App() {
 
         <div className="section-header1">
           {/* <div>To</div> */}
-          <div className="balance">Balance: 0 ASTR</div>
+          <div className="balance">Balance: {Number(balance).toFixed(2)} ASTR</div>
 
           </div>
           <div className="network-row">
@@ -192,8 +233,18 @@ function App() {
 
         {/* Action buttons */}
         <div className="action-buttons">
-          <button className="action-button approve">Approve</button>
-          <button className="action-button bridge" onClick={BridgeHandler}>Bridge</button>
+          <button 
+            className={`action-button bridge `}
+            onClick={BridgeHandler}
+          >
+            Approve
+          </button>
+          <button 
+            className={`action-button approve ${parseFloat(amount) > 0 ? 'active' : ''}`}
+            onClick={BridgeHandler}
+          >
+            Bridge
+          </button>
         </div>
       </div>
     </div>

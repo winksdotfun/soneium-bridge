@@ -1,8 +1,10 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
+  width: 100%;
+  height: 100%;
 }
 
 .logo {
@@ -50,11 +52,16 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 20px;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
-.connect-button{
-  margin: 50px;
+.connect-button {
+  margin: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,19 +69,19 @@
 
 .bridge-card {
   /* background: rgba(20, 21, 42, 0.95); */
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 12px;
+  padding: 12px;
   width: 100%;
-  max-width: 480px;
+  max-width: 360px;
   color: white;
 }
 
 .transfer-section {
   background: transparent;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid #8e8e9d;
-  padding: 16px;
-  margin-bottom: 16px;
+  padding: 8px;
+  margin-bottom: 8px;
 }
 
 .section-header {
@@ -109,13 +116,13 @@
 }
 
 .network-logo {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
 }
 
 .network-name {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -149,7 +156,7 @@
   background: transparent;
   border: none;
   color: white;
-  font-size: 24px;
+  font-size: 18px;
   text-align: right;
   width: 100%;
   outline: none;
@@ -162,8 +169,8 @@
   color: #d8a400;
   display: flex;
   flex-direction: column;
-  padding: 6px 8px;
-  row-gap: 6px;
+  padding: 4px 6px;
+  row-gap: 4px;
 }
 
 .info-box ul {
@@ -187,19 +194,19 @@
 .action-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 8px;
 }
 
 .action-button {
-  padding: 12px;
+  padding: 8px;
   border-radius: 500px;
   border: none;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   background: transparent;
   color: white;
-  margin-top: 10px;
+  margin-top: 6px;
   border: 1px solid #5f656f;
     color: #5f656f;
 }
@@ -207,3 +214,12 @@
 /* .action-button:hover {
   background: rgba(40, 41, 62, 0.95);
 } */
+
+.approve {
+  background-color: transparent;
+}
+
+.approve.active {
+  background-color: #3b82f6;
+  color: white;
+}
