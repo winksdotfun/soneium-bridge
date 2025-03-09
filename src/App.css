@@ -1,7 +1,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 2rem;
   text-align: center;
   width: 100%;
   height: 100%;
@@ -52,7 +52,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 10px;
+  padding: 20px;
   position: fixed;
   top: 0;
   left: 0;
@@ -61,7 +61,7 @@
 }
 
 .connect-button {
-  margin: 5px;
+  margin: 7px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,31 +70,31 @@
 .bridge-card {
   /* background: rgba(20, 21, 42, 0.95); */
   border-radius: 12px;
-  padding: 12px;
+  padding: 19px;
   width: 100%;
-  max-width: 360px;
+  max-width: 395px;
   color: white;
 }
 
 .transfer-section {
   background: transparent;
-  border-radius: 8px;
+  border-radius: 9px;
   border: 1px solid #8e8e9d;
-  padding: 8px;
-  margin-bottom: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
 }
 
 .section-header {
   color: #fff;
-  font-size: 16px;
-  margin-bottom: 12px;
+  font-size: 14px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
 }
 .section-header1 {
   color: #fff;
-  font-size: 16px;
-  margin-bottom: 12px;
+  font-size: 14px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: flex-end;
 }
@@ -104,7 +104,7 @@
   justify-content: space-between;
   align-items: center;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
     font-weight: 700;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 }
@@ -116,8 +116,8 @@
 }
 
 .network-logo {
-  width: 24px;
-  height: 24px;
+  width: 27px;
+  height: 27px;
   border-radius: 50%;
 }
 
@@ -156,7 +156,7 @@
   background: transparent;
   border: none;
   color: white;
-  font-size: 18px;
+  font-size: 19px;
   text-align: right;
   width: 100%;
   outline: none;
@@ -169,8 +169,8 @@
   color: #d8a400;
   display: flex;
   flex-direction: column;
-  padding: 4px 6px;
-  row-gap: 4px;
+  padding: 6px 8px;
+  row-gap: 6px;
 }
 
 .info-box ul {
@@ -194,19 +194,19 @@
 .action-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 12px;
 }
 
 .action-button {
-  padding: 8px;
+  padding: 9px;
   border-radius: 500px;
   border: none;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   background: transparent;
   color: white;
-  margin-top: 6px;
+  margin-top: 7px;
   border: 1px solid #5f656f;
     color: #5f656f;
 }
@@ -222,4 +222,143 @@
 .approve.active {
   background-color: #3b82f6;
   color: white;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 14px;
+  margin: 8px 0;
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: transparent;
+  padding: 19px;
+  border-radius: 12px;
+  max-width: 90%;
+  width: 395px;
+  position: relative;
+  border: 1px solid #8e8e9d;
+}
+
+.modal-header {
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-message {
+  color: #8e8e9d;
+  font-size: 14px;
+  margin-bottom: 12px;
+  text-align: center;
+  font-family: Inter, ui-sans-serif, system-ui;
+}
+
+.modal-button {
+  padding: 9px;
+  border-radius: 500px;
+  border: 1px solid #5f656f;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: #5f656f;
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.modal-button:hover {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.modal-content.success {
+  border-color: #22c55e;
+}
+
+.modal-header.success {
+  color: #22c55e;
+}
+
+.modal-button.success {
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.modal-button.success:hover {
+  background-color: #22c55e;
+  border-color: #22c55e;
+  color: white;
+}
+
+.tx-hash {
+  display: block;
+  color: #3b82f6;
+  text-decoration: none;
+  margin-top: 8px;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+
+.tx-hash:hover {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.modal-content.loading {
+  border-color: #3b82f6;
+}
+
+.modal-header.loading {
+  color: #3b82f6;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #3b82f6;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Make loading modal non-dismissible */
+.modal-content.loading {
+  pointer-events: auto;
+}
+
+.modal-overlay:has(.modal-content.loading) {
+  pointer-events: none;
 }
