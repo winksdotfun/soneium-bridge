@@ -370,6 +370,7 @@ function App() {
               Bridge
             </button>
           </div>
+          <p>Powered by winks.fun</p>
         </div>
       </div>
       <ErrorModal />
