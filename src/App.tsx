@@ -357,10 +357,10 @@ function App() {
 
   return (
     <>
-      <div className="container">
+      <div className="container text-sm">
         <div className="bridge-card">
           <div className=" flex justify-between items-center">
-            <div>Winks Points: {winkpoints}</div>
+            <div className="bg-blue-500/40 p-2 text-white font-semibold rounded-[10px]">Winks Points: {winkpoints}</div>
             <div className="connect-button">
               <ConnectButton />
             </div>
