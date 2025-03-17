@@ -3,11 +3,14 @@ import "./App.css";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import abi from "./abi.json";
 import { ethers } from "ethers";
+import { useAccount } from "wagmi";
+import Confetti from 'react-confetti';
+
 
 function App() {
-  const [amount, setAmount] = useState("0");
-  const [balance, setBalance] = useState("0");
-  const [soneumBalance, setSoneumBalance] = useState("0");
+  const [amount, setAmount] = useState("");
+  const [balance, setBalance] = useState("");
+  const [soneumBalance, setSoneumBalance] = useState("");
   const [error, setError] = useState("");
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -17,25 +20,55 @@ function App() {
   const [winkpoints, setWinkpoints] = useState(0);
   const contractAddress = "0x4036a6Ff8C1a29677108Aef299B560f6E4fA5e71";
 
+  const { isConnected } = useAccount();
+
   useEffect(() => {
     const checkBalance = async () => {
       try {
         if (window.ethereum) {
+          // Check if connected to the right network
+          const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+          console.log("Connected to chain ID:", chainId);
+          
+          // Astar Network chainId is 0x250 (592 in decimal)
+          if (chainId !== '0x250') {
+            console.log("Not connected to Astar Network. Please switch networks in your wallet.");
+            
+            // Optionally, you can prompt the user to switch networks
+            try {
+              await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: '0x250' }], // Astar Network
+              });
+            } catch (error) {
+              console.error("Failed to switch networks:", error);
+              return;
+            }
+          }
+          
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const accounts = await window.ethereum.request({
             method: "eth_requestAccounts",
           });
+          
+          if (accounts.length === 0) {
+            console.log("No accounts found. Please connect your wallet.");
+            return;
+          }
+          
           const userAccount = accounts[0];
-
+          console.log("Checking balance for account:", userAccount);
+    
+          // Get balance with proper error handling
           const balance = await provider.getBalance(userAccount);
           console.log(
-            "User balance:",
-            ethers.utils.formatEther(balance),
+            "User balance (raw) ASTR:", balance.toString(),
+            "User balance (formatted) ASTR:", ethers.utils.formatEther(balance),
             "ASTR"
           );
           setBalance(ethers.utils.formatEther(balance));
-
-          console.log("userAccount", userAccount);
+    
+          // Continue with winkpoints fetch
           try {
             const winkpointsData = await fetch(
               `https://inner-circle-seven.vercel.app/api/action/getPoints?address=${userAccount}`,
@@ -43,20 +76,21 @@ function App() {
                 method: "GET",
               }
             );
-
+    
             const data = await winkpointsData.json();
-
-            console.log("data", data);
-
+            console.log("Winkpoints data:", data);
             setWinkpoints(data.points);
           } catch (error) {
-            console.log("errir", error);
+            console.log("Error fetching winkpoints:", error);
           }
+        } else {
+          console.log("Ethereum provider not found. Please install MetaMask or another wallet.");
         }
       } catch (error) {
         console.error("Error checking balance:", error);
       }
     };
+    
     const checkSoneumBalance = async () => {
       try {
         if (window.ethereum) {
@@ -84,7 +118,7 @@ function App() {
 
     checkBalance();
     checkSoneumBalance();
-  }, []); // Empty dependency array means this runs once on component mount
+  }, [isConnected]); // Empty dependency array means this runs once on component mount
 
   const validateTransaction = () => {
     if (!window.ethereum) {
@@ -273,59 +307,93 @@ function App() {
     );
   };
 
-  const SuccessModal = () => {
-    if (!showSuccessModal) return null;
 
+  
+  const SuccessModal = () => {
+    const [windowDimension, setWindowDimension] = useState({ width: window.innerWidth, height: window.innerHeight });
+    const points = 100;
+    
+    useEffect(() => {
+      const handleResize = () => {
+        setWindowDimension({ width: window.innerWidth, height: window.innerHeight });
+      };
+  
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
+  
+    if (!showSuccessModal) return null;
+  
     return (
-      <div className="modal-overlay" onClick={() => setShowSuccessModal(false)}>
-        <div
-          className="modal-content success"
+      <div className="fixed inset-0 flex items-center justify-center backdrop-blur-lg z-50" onClick={() => setShowSuccessModal(false)}>
+        {/* Confetti overlay */}
+        <Confetti
+          width={windowDimension.width}
+          height={windowDimension.height}
+          recycle={false}
+          numberOfPieces={150}
+          colors={['#9333EA', '#A855F7', '#C084FC', '#4F46E5', '#6366F1', '#38BDF8']}
+        />
+        
+        <div 
+          className=" rounded-xl shadow-xl max-w-md w-11/12 overflow-hidden border border-[#3b82f6]"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="modal-header success">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-            >
-              <path
-                d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
+          <div className="flex flex-col items-center justify-center pt-6 pb-2">
+            <div className="bg-[#3b82f6] p-3 rounded-full mb-4 shadow-lg shadow-purple-500/20">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-              />
-              <polyline
-                points="22 4 12 14.01 9 11.01"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Success
+                className="text-white"
+              >
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-white">
+              Woo-hoo!🎉 <br /> Transaction Successful
+            </h2>
           </div>
-          <div className="modal-message">
-            Transaction successful!
+          
+          <div className="px-6 py-4 text-center">
+            <p className="text-lg text-white mb-3">
+              You just scored <span className="font-bold text-[#3b82f6] text-xl">{points} Wink Points</span>!
+            </p>
+            
+            <div className=" flex justify-center items-center gap-4">
             <a
               href={`https://astar.subscan.io/tx/${txHash}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="tx-hash"
+              className="inline-block bg-white px-4 py-3 rounded-lg text-sm font-medium hover:bg-purple-900/50 transition-colors duration-200"
             >
               View transaction
             </a>
+          
+            <h6
+              className="w-[40%] bg-[#3b82f6]  text-white py-3 px-4 rounded-lg font-semibold hover:bg-[#3b82f6]/70 transition-all duration-200 transform hover:-translate-y-1 shadow-md hover:shadow-lg shadow-purple-500/20"
+              onClick={() => setShowSuccessModal(false)}
+            >
+              Close
+            </h6>
           </div>
-          <button
-            className="modal-button success"
-            onClick={() => setShowSuccessModal(false)}
-          >
-            Close
-          </button>
+
+          </div>
         </div>
       </div>
     );
   };
+  
+  
+
 
   const LoadingModal = () => {
     if (!isLoading) return null;
@@ -459,6 +527,7 @@ function App() {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   className="token-amount"
+                  placeholder="00"
                 />
               </div>
             </div>
