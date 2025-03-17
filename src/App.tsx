@@ -13,6 +13,8 @@ function App() {
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [txHash, setTxHash] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  const [winkpoints, setWinkpoints] = useState(0)
   const contractAddress = '0x4036a6Ff8C1a29677108Aef299B560f6E4fA5e71'
 
   useEffect(() => {
@@ -26,6 +28,24 @@ function App() {
           const balance = await provider.getBalance(userAccount)
           console.log('User balance:', ethers.utils.formatEther(balance), 'ASTR')
           setBalance(ethers.utils.formatEther(balance))
+
+          console.log("userAccount",userAccount);
+          try {
+            const winkpointsData = await fetch(`https://inner-circle-seven.vercel.app/api/action/getPoints?address=${userAccount}`, {
+              method: 'GET',
+          
+            })
+
+            const data = await winkpointsData.json()
+
+            console.log("data",data);
+
+            setWinkpoints(data.points)
+            
+          } catch (error) {
+            console.log("errir",error);
+            
+          }
         }
       } catch (error) {
         console.error('Error checking balance:', error)
@@ -153,10 +173,33 @@ function App() {
       
       console.log('Transaction sent:', tx.hash)
       setTxHash(tx.hash)  // Save tx hash
+
+
       
       // Wait for transaction to be mined
       const receipt = await tx.wait()
       console.log('Transaction confirmed:', receipt)
+
+      try {
+        const response = await fetch('https://inner-circle-seven.vercel.app/api/action/setPoints', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            to: userAccount
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update points');
+        }
+
+        const data = await response.json();
+        console.log('Points updated:', data);
+      } catch (error) {
+        
+      }
       
       setShowSuccessModal(true)  // Show success modal instead of alert
     } catch (error: any) {
@@ -277,6 +320,10 @@ function App() {
         <div className="bridge-card">
           <div className='connect-button'>
             <ConnectButton />
+          </div>
+
+          <div>
+            Winks Points: {winkpoints}
           </div>
           {/* From section */}
           <div className="transfer-section">
