@@ -16,6 +16,7 @@ function App() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [txHash, setTxHash] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [pointsUpdate, setPointsUpdate]=useState(false);
 
   const [winkpoints, setWinkpoints] = useState(0);
   const contractAddress = "0x4036a6Ff8C1a29677108Aef299B560f6E4fA5e71";
@@ -118,7 +119,9 @@ function App() {
 
     checkBalance();
     checkSoneumBalance();
-  }, [isConnected]); // Empty dependency array means this runs once on component mount
+    setPointsUpdate(false);
+  }, [isConnected, pointsUpdate]); 
+
 
   const validateTransaction = () => {
     if (!window.ethereum) {
@@ -248,6 +251,7 @@ function App() {
 
         const data = await response.json();
         console.log("Points updated:", data);
+        setPointsUpdate(true);
       } catch (error) {}
 
       setShowSuccessModal(true); // Show success modal instead of alert
@@ -442,7 +446,7 @@ function App() {
           </div>
         </div>
       ) : (
-      <div className="container text-sm">
+      <div className="container text-xs">
         <div className="bridge-card">
           <div className=" flex justify-between items-center">
             <div className="bg-blue-500/40 p-2 text-white font-semibold rounded-[10px]">Winks Points: {winkpoints}</div>
