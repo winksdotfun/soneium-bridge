@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "@rainbow-me/rainbowkit": "^2.2.4",
+    "@tailwindcss/vite": "^4.0.14",
     "@tanstack/react-query": "^5.67.1",
+    "canvas-confetti": "^1.9.3",
     "ethers": "^5.7.2",
     "react": "^19.0.0",
+    "react-confetti": "^6.4.0",
     "react-dom": "^19.0.0",
     "viem": "^2.23.6",
     "wagmi": "^2.14.12"
@@ -29,7 +32,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
     "postcss": "^8.5.3",
-    "tailwindcss": "^4.0.11",
+    "tailwindcss": "^4.0.14",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
