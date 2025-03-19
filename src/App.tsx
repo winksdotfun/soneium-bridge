@@ -325,6 +325,22 @@ function App() {
           <div>
             Winks Points: {winkpoints}
           </div>
+
+          <div className="attestation-section">
+            <div className="attestation-info">
+              <span>✓ Attested with Sign Protocol</span>
+              <a 
+                href="https://sepolia.basescan.org/tx/0xe41df2467ed5313534c3b31d9b41f5641a79604f960551c739e1f0c1920facf5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="attestation-link"
+              >
+                View Attestation
+              </a>
+            </div>
+          </div>
+
+
           {/* From section */}
           <div className="transfer-section">
             <div className="section-header">
